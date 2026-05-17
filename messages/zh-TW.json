@@ -43,7 +43,25 @@
     "newCycle": "重新開啟新 30 天",
     "saveError": "請檢查填寫內容",
     "cycleError": "無法重啟週期",
-    "resetError": "無法重置卡片"
+    "resetError": "無法重置卡片",
+    "defaultRewards": [
+      "小旅行",
+      "看電影",
+      "大餐",
+      "按摩",
+      "買小禮物"
+    ]
+  },
+  "verify": {
+    "back": "返回",
+    "label": "打卡驗證",
+    "title": "雙人同步打卡",
+    "description": "與夥伴在同一畫面完成雙指塗鴉，累積今日集點。",
+    "loading": "載入中…",
+    "ritualHint": "雙指同步 · 長按 3 秒",
+    "notFound": "找不到此集點卡",
+    "callout": "開始今日打卡",
+    "calloutHint": "進入專屬打卡頁，與夥伴同步完成儀式"
   },
   "cards": {
     "myCards": "我的集點卡",

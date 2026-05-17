@@ -43,7 +43,25 @@
     "newCycle": "Restart 30-day cycle",
     "saveError": "Please check the form",
     "cycleError": "Unable to restart cycle",
-    "resetError": "Unable to reset card"
+    "resetError": "Unable to reset card",
+    "defaultRewards": [
+      "Mini getaway",
+      "Movie night",
+      "Nice dinner",
+      "Spa day",
+      "Small gift"
+    ]
+  },
+  "verify": {
+    "back": "Back",
+    "label": "Check-in",
+    "title": "Two-person sync",
+    "description": "Complete the two-finger doodle together on one screen to earn today's stamp.",
+    "loading": "Loading…",
+    "ritualHint": "Two fingers · hold 3 sec",
+    "notFound": "Card not found",
+    "callout": "Start today's check-in",
+    "calloutHint": "Open the dedicated check-in page to complete the ritual together"
   },
   "cards": {
     "myCards": "My cards",
