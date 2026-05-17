@@ -151,17 +151,28 @@
     "back": "Back",
     "label": "Check-in",
     "title": "Two-person verification",
-    "description": "Complete the two-finger doodle together on one screen to earn today's stamp.",
+    "description": "Complete the two-finger doodle together on one screen to earn a stamp.",
     "loading": "Loading…",
     "ritualHint": "Two fingers · hold 3 sec",
     "notFound": "Card not found",
-    "callout": "Start today's check-in",
-    "calloutHint": "Open the dedicated check-in page to complete the ritual together"
+    "callout": "Start the check-in",
+    "calloutHint": "Open the dedicated check-in page to complete the ritual together",
+    "shareTitle": "Share this check-in",
+    "shareHint": "Send this page to your partner so you can check in together.",
+    "shareButton": "Share link",
+    "shareText": "Open this check-in link and complete the two-finger ritual together.",
+    "shareRulesTitle": "Sharing rules & how it works",
+    "shareRules": [
+      "Share the link only with your check-in partner.",
+      "Both of you need to be on the same check-in page at the same time to complete the ritual."
+    ],
+    "shareSuccess": "Share sent.",
+    "copySuccess": "Link copied.",
+    "shareError": "Unable to share right now."
   },
   "cards": {
     "myCards": "My cards",
     "newCard": "New card",
-    "cycleEnds": "Cycle ends",
     "points": "Current points"
   },
   "canvas": {
@@ -173,7 +184,7 @@
     "exitFullscreen": "Exit",
     "confirmFullscreen": "Start confirm",
     "cancelConfirm": "Cancel confirm",
-    "fullscreenHint": "After clicking start confirm, both of you will draw a pattern in the corners of the screen within three seconds to represent the result. It can be a cute flower for a perfect score or a cool personal signature. The key is to complete it together at the same time to successfully earn today's stamp!",
+    "fullscreenHint": "After clicking start confirm, both of you will draw a pattern in the corners of the screen within three seconds to represent the result. It can be a cute flower for a perfect score or a cool personal signature. The key is to complete it together at the same time to successfully earn a stamp!",
     "startConfirm": "Start confirm"
   },
   "toast": {
@@ -191,7 +202,7 @@
   },
   "errors": {
     "invalidCredentials": "Invalid email or password",
-    "cardExpired": "This cycle ended. Restart the 30-day cycle.",
+    "cardExpired": "Unable to check in right now.",
     "notSignedIn": "Please sign in",
     "selectCard": "Sign in and select a card",
     "cardComplete": "Card is already complete"

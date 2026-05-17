@@ -25,6 +25,7 @@ export default function VerifyPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const [shareToast, setShareToast] = useState<string | null>(null);
   const [rewardModal, setRewardModal] = useState<string | null>(null);
   const [resetKey, setResetKey] = useState(0);
 
@@ -131,6 +132,41 @@ export default function VerifyPage() {
     [card?.rewardMap]
   );
 
+  const shareLink = useMemo(() => {
+    if (typeof window === "undefined") return "";
+    return `${window.location.origin}/${locale}/verify/${params.cardId}`;
+  }, [locale, params.cardId]);
+
+  const shareRules = useMemo(
+    () => t.raw("verify.shareRules") as string[],
+    [t]
+  );
+
+  const handleShare = async () => {
+    if (!shareLink) return;
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: t("verify.shareTitle"),
+          text: t("verify.shareText"),
+          url: shareLink,
+        });
+        setShareToast(t("verify.shareSuccess"));
+      } else {
+        await navigator.clipboard.writeText(shareLink);
+        setShareToast(t("verify.copySuccess"));
+      }
+    } catch (shareError) {
+      if (shareError instanceof DOMException && shareError.name === "AbortError") {
+        return;
+      }
+      setShareToast(t("verify.shareError"));
+    } finally {
+      setTimeout(() => setShareToast(null), 1500);
+    }
+  };
+
   return (
     <main className="min-h-screen overflow-x-clip bg-[#FAF9F6] px-3 pb-16 pt-4 sm:px-4 sm:pt-6">
       <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col gap-4 sm:max-w-4xl sm:gap-6">
@@ -154,6 +190,34 @@ export default function VerifyPage() {
           </div>
           <p className="text-sm text-slate-500">{t("verify.description")}</p>
         </header>
+
+        <section className="rounded-2xl bg-white p-4 shadow-[var(--shadow-soft)] sm:p-5">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="font-[var(--font-display)] text-lg text-[#2f1d1d]">
+                {t("verify.shareTitle")}
+              </h2>
+              <p className="text-sm text-slate-500">{t("verify.shareHint")}</p>
+            </div>
+            <button
+              type="button"
+              onClick={handleShare}
+              className="rounded-full border border-[#f1c6cd] bg-[#fff6f7] px-5 py-2 text-sm font-semibold text-[#d14c64]"
+            >
+              {t("verify.shareButton")}
+            </button>
+          </div>
+          <div className="mt-4 rounded-2xl bg-[#faf5f6] p-4 text-sm text-slate-600">
+            <p className="font-semibold text-[#2f1d1d]">
+              {t("verify.shareRulesTitle")}
+            </p>
+            <ul className="mt-2 list-disc space-y-1 pl-5">
+              {shareRules.map((rule, index) => (
+                <li key={`${rule}-${index}`}>{rule}</li>
+              ))}
+            </ul>
+          </div>
+        </section>
 
         {error && (
           <div className="rounded-2xl border border-rose-100 bg-rose-50 px-4 py-3 text-sm text-rose-600">
@@ -209,14 +273,14 @@ export default function VerifyPage() {
       </div>
 
       <AnimatePresence>
-        {toast && (
+        {(shareToast ?? toast) && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             className="fixed bottom-6 left-1/2 z-40 w-[90%] max-w-md -translate-x-1/2 rounded-2xl bg-white px-4 py-3 text-center text-sm font-semibold text-[#2f1d1d] shadow-[var(--shadow-soft)]"
           >
-            {toast}
+            {shareToast ?? toast}
           </motion.div>
         )}
       </AnimatePresence>

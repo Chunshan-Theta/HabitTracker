@@ -192,10 +192,6 @@ export default function HomeClient() {
                     <h3 className="font-[var(--font-display)] text-lg text-[#2f1d1d]">
                       {activeCard.cardName}
                     </h3>
-                    <p className="text-xs text-slate-500">
-                      {t("cards.cycleEnds")} {" "}
-                      {new Date(activeCard.cycleEndAt).toLocaleDateString(locale)}
-                    </p>
                   </div>
                   <div className="rounded-full bg-[#fff6f7] px-4 py-2 text-xs font-semibold text-[#d14c64]">
                     {t("cards.points")}: {activeCard.currentPoints}/

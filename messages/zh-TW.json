@@ -151,17 +151,28 @@
     "back": "返回",
     "label": "打卡驗證",
     "title": "雙人驗證",
-    "description": "與夥伴在同一畫面完成雙指塗鴉，累積今日集點。",
+    "description": "與夥伴在同一畫面完成雙指塗鴉，完成集點。",
     "loading": "載入中…",
     "ritualHint": "雙指同步 · 長按 3 秒",
     "notFound": "找不到此集點卡",
-    "callout": "開始今日打卡",
-    "calloutHint": "進入專屬打卡頁，與夥伴同步完成儀式"
+    "callout": "開始打卡",
+    "calloutHint": "進入專屬打卡頁，與夥伴同步完成儀式",
+    "shareTitle": "分享打卡連結",
+    "shareHint": "把這一頁分享給夥伴，才能一起完成打卡。",
+    "shareButton": "分享連結",
+    "shareText": "打開此打卡連結，兩人一起完成雙指儀式。",
+    "shareRulesTitle": "分享規則與方式",
+    "shareRules": [
+      "只分享給你的打卡夥伴。",
+      "使用同一台裝置一起繪製，一起完成兩人的偉大成就。"
+    ],
+    "shareSuccess": "已完成分享。",
+    "copySuccess": "連結已複製。",
+    "shareError": "暫時無法分享，請稍後再試。"
   },
   "cards": {
     "myCards": "我的集點卡",
     "newCard": "新增卡片",
-    "cycleEnds": "本輪截止",
     "points": "目前點數"
   },
   "canvas": {
@@ -173,7 +184,7 @@
     "exitFullscreen": "退出",
     "confirmFullscreen": "開始確認",
     "cancelConfirm": "取消確認",
-    "fullscreenHint": "點擊開始確認後，請雙方在螢幕兩角用三秒鐘的時間繪製一個圖案來代表這次的結果。可以是一朵可愛的滿分小花，也可以是帥氣的個人簽名，重點是要兩個人同時完成，才能成功獲得當天的集點喔！",
+    "fullscreenHint": "點擊開始確認後，請雙方在螢幕兩角用三秒鐘的時間繪製一個圖案來代表這次的結果。可以是一朵可愛的滿分小花，也可以是帥氣的個人簽名，重點是要兩個人同時完成，才能成功獲得集點喔！",
     "startConfirm": "開始確認"
   },
   "toast": {
@@ -191,7 +202,7 @@
   },
   "errors": {
     "invalidCredentials": "帳號或密碼錯誤",
-    "cardExpired": "本輪已到期，請重新開啟 30 天",
+    "cardExpired": "目前無法完成打卡，請稍後再試。",
     "notSignedIn": "請先登入",
     "selectCard": "請先登入並選擇卡片",
     "cardComplete": "卡片已完成"
