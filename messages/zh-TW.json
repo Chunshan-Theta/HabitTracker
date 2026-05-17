@@ -1,0 +1,78 @@
+{
+  "app": {
+    "title": "雙人互動習慣養成集點卡",
+    "description": "雙人同屏儀式感，讓每日打卡成為甜蜜的共同承諾。",
+    "cta": "開始打卡"
+  },
+  "auth": {
+    "signInTitle": "登入",
+    "signUpTitle": "註冊",
+    "email": "電子郵件",
+    "password": "密碼",
+    "confirmPassword": "確認密碼",
+    "signIn": "登入",
+    "signUp": "建立帳號",
+    "signOut": "登出",
+    "forgot": "忘記密碼",
+    "switchToSignUp": "還沒有帳號？",
+    "switchToSignIn": "已有帳號？",
+    "registerError": "無法註冊，請稍後再試"
+  },
+  "settings": {
+    "title": "建立新卡",
+    "editTitle": "編輯卡片",
+    "helper": "自訂每 30 天的集點儀式。",
+    "cardName": "卡片名稱",
+    "placeholderName": "一起早起挑戰",
+    "totalSlots": "總格數",
+    "rewards": "獎勵設定",
+    "rewardSlot": "第幾格",
+    "rewardText": "獎勵內容",
+    "placeholderReward": "小旅行",
+    "addReward": "新增獎勵",
+    "remove": "移除",
+    "save": "儲存",
+    "saving": "儲存中",
+    "reset": "重置卡片",
+    "newCycle": "重新開啟新 30 天",
+    "saveError": "請檢查填寫內容",
+    "cycleError": "無法重啟週期",
+    "resetError": "無法重置卡片"
+  },
+  "cards": {
+    "myCards": "我的集點卡",
+    "newCard": "新增卡片",
+    "cycleEnds": "本輪截止",
+    "points": "目前點數"
+  },
+  "canvas": {
+    "title": "雙指同步驗證",
+    "hint": "雙指同時長按塗鴉 3 秒即可打卡",
+    "progress": "同步進度",
+    "complete": "驗證完成"
+  },
+  "toast": {
+    "encouragements": [
+      "今天的汗水沒有白流！",
+      "一起前進的感覺超棒。",
+      "每一天都在累積奇蹟。",
+      "你們的默契正在加分。",
+      "好好過日子，也是修行。"
+    ]
+  },
+  "modal": {
+    "rewardUnlocked": "獎勵解鎖",
+    "confirm": "領取確認"
+  },
+  "errors": {
+    "invalidCredentials": "帳號或密碼錯誤",
+    "cardExpired": "本輪已到期，請重新開啟 30 天",
+    "notSignedIn": "請先登入",
+    "selectCard": "請先登入並選擇卡片",
+    "cardComplete": "卡片已完成"
+  },
+  "ads": {
+    "header": "廣告區（Header）",
+    "footer": "廣告區（Footer）"
+  }
+}

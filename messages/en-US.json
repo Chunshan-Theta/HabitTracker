@@ -1,0 +1,78 @@
+{
+  "app": {
+    "title": "Shared Habit Stamp Card",
+    "description": "A ritualized two-person check-in that builds momentum together.",
+    "cta": "Start Check-in"
+  },
+  "auth": {
+    "signInTitle": "Sign In",
+    "signUpTitle": "Create Account",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "forgot": "Forgot password",
+    "switchToSignUp": "New here?",
+    "switchToSignIn": "Already have an account?",
+    "registerError": "Unable to register. Please try again."
+  },
+  "settings": {
+    "title": "Create New Card",
+    "editTitle": "Edit Card",
+    "helper": "Shape a 30-day ritual together.",
+    "cardName": "Card name",
+    "placeholderName": "Morning ritual",
+    "totalSlots": "Total slots",
+    "rewards": "Reward map",
+    "rewardSlot": "Slot",
+    "rewardText": "Reward",
+    "placeholderReward": "Mini getaway",
+    "addReward": "Add reward",
+    "remove": "Remove",
+    "save": "Save",
+    "saving": "Saving",
+    "reset": "Reset card",
+    "newCycle": "Restart 30-day cycle",
+    "saveError": "Please check the form",
+    "cycleError": "Unable to restart cycle",
+    "resetError": "Unable to reset card"
+  },
+  "cards": {
+    "myCards": "My cards",
+    "newCard": "New card",
+    "cycleEnds": "Cycle ends",
+    "points": "Current points"
+  },
+  "canvas": {
+    "title": "Two-finger verification",
+    "hint": "Use two fingers and keep drawing for 3 seconds",
+    "progress": "Sync progress",
+    "complete": "Verified"
+  },
+  "toast": {
+    "encouragements": [
+      "That effort counts today.",
+      "Shared rhythm feels good.",
+      "Every day is a tiny miracle.",
+      "Your teamwork just leveled up.",
+      "Gentle consistency is powerful."
+    ]
+  },
+  "modal": {
+    "rewardUnlocked": "Reward unlocked",
+    "confirm": "Claim now"
+  },
+  "errors": {
+    "invalidCredentials": "Invalid email or password",
+    "cardExpired": "This cycle ended. Restart the 30-day cycle.",
+    "notSignedIn": "Please sign in",
+    "selectCard": "Sign in and select a card",
+    "cardComplete": "Card is already complete"
+  },
+  "ads": {
+    "header": "Ad space (Header)",
+    "footer": "Ad space (Footer)"
+  }
+}
