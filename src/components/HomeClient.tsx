@@ -2,12 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { AnimatePresence, motion } from "framer-motion";
-import confetti from "canvas-confetti";
+import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
-import SignatureCanvas from "@/components/SignatureCanvas";
 import Settings from "@/components/Settings";
-import type { CheckinResult, HabitCard, RewardMap } from "@/types";
+import type { HabitCard, RewardMap } from "@/types";
 
 const normalizeRewardMap = (rewardMap: RewardMap | null | undefined) => {
   if (!rewardMap) return {} as RewardMap;
@@ -22,9 +20,6 @@ export default function HomeClient() {
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
   const [creatingNew, setCreatingNew] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [toast, setToast] = useState<string | null>(null);
-  const [rewardModal, setRewardModal] = useState<string | null>(null);
-  const [resetKey, setResetKey] = useState(0);
 
   const activeCard = useMemo(
     () => cards.find((card) => card.id === activeCardId) ?? cards[0] ?? null,
@@ -57,16 +52,6 @@ export default function HomeClient() {
     }
   }, [status]);
 
-  useEffect(() => {
-    if (rewardModal) {
-      confetti({
-        particleCount: 140,
-        spread: 80,
-        origin: { y: 0.6 },
-      });
-    }
-  }, [rewardModal]);
-
   const updateCardState = (updated: HabitCard) => {
     setCards((prev) =>
       prev.map((card) => (card.id === updated.id ? updated : card))
@@ -87,60 +72,10 @@ export default function HomeClient() {
 
   const handleCycle = (updated: HabitCard) => {
     updateCardState(updated);
-    setResetKey((prev) => prev + 1);
   };
 
   const handleReset = (updated: HabitCard) => {
     updateCardState(updated);
-    setResetKey((prev) => prev + 1);
-  };
-
-  const handleCheckin = async () => {
-    if (!activeCard) return;
-    setError(null);
-
-    const response = await fetch(`/api/cards/${activeCard.id}/checkin`, {
-      method: "POST",
-    });
-
-    if (!response.ok) {
-      const result = await response.json();
-      const errorMessage =
-        result.error === "Cycle expired"
-          ? t("errors.cardExpired")
-          : result.error === "Card complete"
-            ? t("errors.cardComplete")
-            : result.error === "Unauthorized"
-              ? t("errors.notSignedIn")
-              : result.error ?? t("errors.cardExpired");
-      setError(errorMessage);
-      setResetKey((prev) => prev + 1);
-      return;
-    }
-
-    const result = (await response.json()) as CheckinResult;
-    const rewardText = result.rewardText ?? undefined;
-
-    setCards((prev) =>
-      prev.map((card) =>
-        card.id === activeCard.id
-          ? { ...card, currentPoints: result.pointsAfter }
-          : card
-      )
-    );
-
-    if (result.isRewardHit && rewardText) {
-      setRewardModal(rewardText);
-    } else {
-      const encouragements = t.raw("toast.encouragements") as string[];
-      const message =
-        encouragements[Math.floor(Math.random() * encouragements.length)];
-      setToast(message);
-      setTimeout(() => {
-        setToast(null);
-        setResetKey((prev) => prev + 1);
-      }, 1500);
-    }
   };
 
   const rewardMap = normalizeRewardMap(activeCard?.rewardMap);
@@ -157,6 +92,17 @@ export default function HomeClient() {
               <p className="text-sm text-slate-500">
                 {t("app.description")}
               </p>
+              <p className="mt-2 text-sm text-slate-500">
+                {t("app.subtitle")}
+              </p>
+              <div className="mt-3 flex flex-col gap-2 text-xs text-slate-500">
+                {(t.raw("app.benefits") as string[]).map((item) => (
+                  <div key={item} className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-[#f27c91]" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
             </div>
             {status === "authenticated" ? (
               <button
@@ -175,9 +121,7 @@ export default function HomeClient() {
               </a>
             )}
           </div>
-          <div className="rounded-2xl border border-dashed border-[#f6a6b2] bg-[#fff6f7] px-4 py-3 text-center text-xs font-semibold text-[#d14c64]">
-            {t("ads.header")}
-          </div>
+
         </header>
 
         {error && (
@@ -277,27 +221,30 @@ export default function HomeClient() {
                     );
                   })}
                 </div>
+                <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#f6a6b2] bg-[#fff6f7] px-4 py-3">
+                  <div>
+                    <p className="text-sm font-semibold text-[#2f1d1d]">
+                      {t("verify.callout")}
+                    </p>
+                    <p className="text-xs text-slate-500">
+                      {t("verify.calloutHint")}
+                    </p>
+                  </div>
+                  {status === "authenticated" ? (
+                    <Link
+                      href={`/${locale}/verify/${activeCard.id}`}
+                      className="rounded-full bg-[#f27c91] px-4 py-2 text-xs font-semibold text-white"
+                    >
+                      {t("app.cta")}
+                    </Link>
+                  ) : (
+                    <span className="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-400">
+                      {t("errors.notSignedIn")}
+                    </span>
+                  )}
+                </div>
               </div>
             )}
-
-            <div className="rounded-2xl bg-white p-5 shadow-[var(--shadow-soft)]">
-              <div className="mb-4">
-                <h3 className="font-[var(--font-display)] text-lg text-[#2f1d1d]">
-                  {t("canvas.title")}
-                </h3>
-                <p className="text-sm text-slate-500">{t("canvas.hint")}</p>
-              </div>
-              <SignatureCanvas
-                resetKey={resetKey}
-                disabled={status !== "authenticated" || !activeCard}
-                disabledMessage={
-                  status !== "authenticated"
-                    ? t("errors.notSignedIn")
-                    : t("errors.selectCard")
-                }
-                onComplete={handleCheckin}
-              />
-            </div>
           </div>
 
           <div className="space-y-6">
@@ -309,59 +256,8 @@ export default function HomeClient() {
             />
           </div>
         </section>
-
-        <footer className="rounded-2xl border border-dashed border-[#f6a6b2] bg-[#fff6f7] px-4 py-3 text-center text-xs font-semibold text-[#d14c64]">
-          {t("ads.footer")}
-        </footer>
       </div>
 
-      <AnimatePresence>
-        {toast && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-6 left-1/2 z-40 w-[90%] max-w-md -translate-x-1/2 rounded-2xl bg-white px-4 py-3 text-center text-sm font-semibold text-[#2f1d1d] shadow-[var(--shadow-soft)]"
-          >
-            {toast}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {rewardModal && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#fef4f6]/90 px-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="w-full max-w-md rounded-3xl bg-white p-6 text-center shadow-[var(--shadow-soft)]"
-            >
-              <h3 className="font-[var(--font-display)] text-2xl text-[#2f1d1d]">
-                {t("modal.rewardUnlocked")}
-              </h3>
-              <p className="mt-3 text-lg font-semibold text-[#d14c64]">
-                {rewardModal}
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  setRewardModal(null);
-                  setResetKey((prev) => prev + 1);
-                }}
-                className="mt-6 w-full rounded-full bg-[#f27c91] px-4 py-3 text-sm font-semibold text-white"
-              >
-                {t("modal.confirm")}
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </main>
   );
 }

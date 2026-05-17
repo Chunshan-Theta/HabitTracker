@@ -27,6 +27,7 @@ export default function Settings({
 }: SettingsProps) {
   const t = useTranslations("settings");
   const tErrors = useTranslations("errors");
+  const defaultRewards = t.raw("defaultRewards") as string[];
   const [cardName, setCardName] = useState(card?.cardName ?? "");
   const [totalSlots, setTotalSlots] = useState(card?.totalSlots ?? 30);
   const [saving, setSaving] = useState(false);
@@ -34,17 +35,26 @@ export default function Settings({
 
   const [rewards, setRewards] = useState<RewardRow[]>([]);
 
+  const pickDefaultReward = () => {
+    if (Array.isArray(defaultRewards) && defaultRewards.length > 0) {
+      return defaultRewards[Math.floor(Math.random() * defaultRewards.length)];
+    }
+    return "";
+  };
+
   useEffect(() => {
     setCardName(card?.cardName ?? "");
     setTotalSlots(card?.totalSlots ?? 30);
     if (!card?.rewardMap) {
-      setRewards([createRewardRow(5, "")]);
+      setRewards([createRewardRow(5, pickDefaultReward())]);
       return;
     }
     const nextRewards = Object.entries(card.rewardMap).map(([slot, text]) =>
       createRewardRow(Number(slot), String(text))
     );
-    setRewards(nextRewards.length ? nextRewards : [createRewardRow(5, "")]);
+    setRewards(
+      nextRewards.length ? nextRewards : [createRewardRow(5, pickDefaultReward())]
+    );
   }, [card]);
 
   const rewardMap = useMemo<RewardMap>(() => {
@@ -171,7 +181,9 @@ export default function Settings({
           <button
             type="button"
             className="rounded-full border border-[#f6a6b2] px-3 py-1 text-xs font-semibold text-[#d14c64]"
-            onClick={() => setRewards((prev) => [...prev, createRewardRow(5, "")])}
+            onClick={() =>
+              setRewards((prev) => [...prev, createRewardRow(5, pickDefaultReward())])
+            }
           >
             {t("addReward")}
           </button>

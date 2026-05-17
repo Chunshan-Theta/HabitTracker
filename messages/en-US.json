@@ -2,7 +2,13 @@
   "app": {
     "title": "Shared Habit Stamp Card",
     "description": "A ritualized two-person check-in that builds momentum together.",
-    "cta": "Start Check-in"
+    "cta": "Start Check-in",
+    "subtitle": "A 30-day shared habit tracker for habit builders. Best used with an accountability partner for mutual encouragement and growth.",
+    "benefits": [
+      "Build shared rituals and accountability",
+      "Celebrate progress with meaningful rewards",
+      "Strengthen your bond through teamwork"
+    ] 
   },
   "auth": {
     "signInTitle": "Sign In",
@@ -70,9 +76,5 @@
     "notSignedIn": "Please sign in",
     "selectCard": "Sign in and select a card",
     "cardComplete": "Card is already complete"
-  },
-  "ads": {
-    "header": "Ad space (Header)",
-    "footer": "Ad space (Footer)"
   }
 }

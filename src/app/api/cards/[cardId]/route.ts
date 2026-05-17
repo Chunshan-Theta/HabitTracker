@@ -45,6 +45,27 @@ export async function PATCH(
   return NextResponse.json(updated);
 }
 
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ cardId: string }> }
+) {
+  const { cardId } = await params;
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.email) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const card = await prisma.habitCard.findFirst({
+    where: { id: cardId, user: { email: session.user.email } },
+  });
+
+  if (!card) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
+  return NextResponse.json(card);
+}
+
 export async function DELETE(
   _request: Request,
   { params }: { params: Promise<{ cardId: string }> }
