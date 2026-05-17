@@ -41,7 +41,7 @@
     "saving": "Saving",
     "reset": "Reset card",
     "newCycle": "Restart 30-day cycle",
-    "saveError": "Please check the form",
+    "saveError": "Please check the card name, total slots (up to 30), and reward settings.",
     "cycleError": "Unable to restart cycle",
     "resetError": "Unable to reset card",
     "defaultRewards": [
@@ -55,7 +55,7 @@
   "verify": {
     "back": "Back",
     "label": "Check-in",
-    "title": "Two-person sync",
+    "title": "Two-person verification",
     "description": "Complete the two-finger doodle together on one screen to earn today's stamp.",
     "loading": "Loading…",
     "ritualHint": "Two fingers · hold 3 sec",
@@ -73,7 +73,13 @@
     "title": "Two-finger verification",
     "hint": "Use two fingers and keep drawing for 3 seconds",
     "progress": "Sync progress",
-    "complete": "Verified"
+    "complete": "Verified",
+    "fullscreen": "Full screen",
+    "exitFullscreen": "Exit",
+    "confirmFullscreen": "Start confirm",
+    "cancelConfirm": "Cancel confirm",
+    "fullscreenHint": "After clicking start confirm, both of you will draw a pattern in the corners of the screen within three seconds to represent the result. It can be a cute flower for a perfect score or a cool personal signature. The key is to complete it together at the same time to successfully earn today's stamp!",
+    "startConfirm": "Start confirm"
   },
   "toast": {
     "encouragements": [

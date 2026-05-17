@@ -168,7 +168,8 @@ export default function Settings({
         {t("totalSlots")}
         <input
           type="number"
-          min={30}
+          min={1}
+          max={30}
           className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#f6a6b2]"
           value={totalSlots}
           onChange={(event) => setTotalSlots(Number(event.target.value))}

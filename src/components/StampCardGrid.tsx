@@ -56,7 +56,7 @@ export default function StampCardGrid({
               />
             )}
             {rewardText && (
-              <span className="absolute right-0.5 top-0 text-sm leading-none sm:-top-1 sm:right-1 sm:text-lg">
+              <span className="pointer-events-none absolute right-1 top-1 text-sm leading-none sm:right-1.5 sm:top-1.5 sm:text-base">
                 🎁
               </span>
             )}

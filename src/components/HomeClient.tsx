@@ -85,6 +85,14 @@ export default function HomeClient() {
     <main className="min-h-screen overflow-x-clip bg-[#FAF9F6] px-3 pb-16 pt-4 sm:px-4 sm:pt-6">
       <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col gap-4 sm:max-w-4xl sm:gap-6 lg:max-w-6xl">
         <header className="flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-[var(--shadow-soft)] sm:p-5">
+          <div className="flex items-center justify-end">
+            <Link
+              href={`/${locale === "zh-TW" ? "en-US" : "zh-TW"}`}
+              className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-600"
+            >
+              {locale === "zh-TW" ? "EN" : "中文"}
+            </Link>
+          </div>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h1 className="font-[var(--font-display)] text-2xl text-[#2f1d1d]">

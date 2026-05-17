@@ -41,7 +41,7 @@
     "saving": "儲存中",
     "reset": "重置卡片",
     "newCycle": "重新開啟新 30 天",
-    "saveError": "請檢查填寫內容",
+    "saveError": "請確認卡片名稱、總格數（最多 30 格）與獎勵設定。",
     "cycleError": "無法重啟週期",
     "resetError": "無法重置卡片",
     "defaultRewards": [
@@ -55,7 +55,7 @@
   "verify": {
     "back": "返回",
     "label": "打卡驗證",
-    "title": "雙人同步打卡",
+    "title": "雙人驗證",
     "description": "與夥伴在同一畫面完成雙指塗鴉，累積今日集點。",
     "loading": "載入中…",
     "ritualHint": "雙指同步 · 長按 3 秒",
@@ -73,7 +73,13 @@
     "title": "雙指同步驗證",
     "hint": "雙指同時長按塗鴉 3 秒即可打卡",
     "progress": "同步進度",
-    "complete": "驗證完成"
+    "complete": "驗證完成",
+    "fullscreen": "全螢幕",
+    "exitFullscreen": "退出",
+    "confirmFullscreen": "開始確認",
+    "cancelConfirm": "取消確認",
+    "fullscreenHint": "點擊開始確認後，請雙方在螢幕兩角用三秒鐘的時間繪製一個圖案來代表這次的結果。可以是一朵可愛的滿分小花，也可以是帥氣的個人簽名，重點是要兩個人同時完成，才能成功獲得當天的集點喔！",
+    "startConfirm": "開始確認"
   },
   "toast": {
     "encouragements": [

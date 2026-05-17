@@ -13,7 +13,7 @@ export const registerSchema = z
 
 export const cardSchema = z.object({
   cardName: z.string().min(1),
-  totalSlots: z.number().int().min(30),
+  totalSlots: z.number().int().max(30),
   rewardMap: z.record(z.string(), z.string()).default({}),
 });
 
