@@ -125,9 +125,9 @@ export default function VerifyPage() {
   );
 
   return (
-    <main className="min-h-screen bg-[#FAF9F6] px-4 pb-16 pt-6">
-      <div className="mx-auto flex w-full max-w-4xl flex-col gap-6">
-        <header className="flex flex-col gap-4 rounded-2xl bg-white p-5 shadow-[var(--shadow-soft)]">
+    <main className="min-h-screen overflow-x-clip bg-[#FAF9F6] px-3 pb-16 pt-4 sm:px-4 sm:pt-6">
+      <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col gap-4 sm:max-w-4xl sm:gap-6">
+        <header className="flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-[var(--shadow-soft)] sm:p-5">
           <div className="flex items-center justify-between">
             <button
               type="button"
@@ -154,7 +154,7 @@ export default function VerifyPage() {
           </div>
         )}
 
-        <section className="rounded-2xl bg-white p-6 shadow-[var(--shadow-soft)]">
+        <section className="min-w-0 rounded-2xl bg-white p-4 shadow-[var(--shadow-soft)] sm:p-6">
           {loading ? (
             <p className="text-sm text-slate-500">{t("verify.loading")}</p>
           ) : card ? (

@@ -146,7 +146,7 @@ export default function Settings({
   };
 
   return (
-    <div className="space-y-4 rounded-2xl bg-white p-5 shadow-[var(--shadow-soft)]">
+    <div className="min-w-0 space-y-4 rounded-2xl bg-white p-4 shadow-[var(--shadow-soft)] sm:p-5">
       <div>
         <h2 className="font-[var(--font-display)] text-xl text-[#2f1d1d]">
           {card ? t("editTitle") : t("title")}
@@ -192,7 +192,7 @@ export default function Settings({
           {rewards.map((reward, index) => (
             <div
               key={reward.id}
-              className="flex items-center gap-2 rounded-xl bg-[#fff6f7] px-3 py-2"
+              className="flex flex-col gap-2 rounded-xl bg-[#fff6f7] px-3 py-2 sm:flex-row sm:items-center"
             >
               <input
                 type="number"

@@ -20,6 +20,11 @@ export const metadata: Metadata = {
   description: "A ritual-focused habit tracker for shared progress.",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default async function RootLayout({
   children,
 }: Readonly<{

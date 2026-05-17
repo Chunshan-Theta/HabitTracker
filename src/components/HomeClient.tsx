@@ -82,9 +82,9 @@ export default function HomeClient() {
   const rewardMap = normalizeRewardMap(activeCard?.rewardMap);
 
   return (
-    <main className="min-h-screen bg-[#FAF9F6] px-4 pb-16 pt-6">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
-        <header className="flex flex-col gap-4 rounded-2xl bg-white p-5 shadow-[var(--shadow-soft)]">
+    <main className="min-h-screen overflow-x-clip bg-[#FAF9F6] px-3 pb-16 pt-4 sm:px-4 sm:pt-6">
+      <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col gap-4 sm:max-w-4xl sm:gap-6 lg:max-w-6xl">
+        <header className="flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-[var(--shadow-soft)] sm:p-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h1 className="font-[var(--font-display)] text-2xl text-[#2f1d1d]">
@@ -131,9 +131,9 @@ export default function HomeClient() {
           </div>
         )}
 
-        <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-          <div className="space-y-6">
-            <div className="rounded-2xl bg-white p-5 shadow-[var(--shadow-soft)]">
+        <section className="grid min-w-0 gap-4 sm:gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+          <div className="min-w-0 space-y-4 sm:space-y-6">
+            <div className="min-w-0 overflow-hidden rounded-2xl bg-white p-4 shadow-[var(--shadow-soft)] sm:p-5">
               <div className="flex items-center justify-between">
                 <h2 className="font-[var(--font-display)] text-xl text-[#2f1d1d]">
                   {t("cards.myCards")}
@@ -146,7 +146,7 @@ export default function HomeClient() {
                   {t("cards.newCard")}
                 </button>
               </div>
-              <div className="mt-4 flex gap-3 overflow-x-auto pb-2">
+              <div className="-mx-1 mt-4 flex gap-2 overflow-x-auto px-1 pb-2 sm:gap-3">
                 {cards.map((card) => (
                   <button
                     key={card.id}
@@ -155,7 +155,7 @@ export default function HomeClient() {
                       setActiveCardId(card.id);
                       setCreatingNew(false);
                     }}
-                    className={`min-w-[180px] rounded-2xl border px-4 py-3 text-left shadow-sm transition ${
+                    className={`w-[min(100%,9.5rem)] shrink-0 snap-start rounded-2xl border px-3 py-2.5 text-left shadow-sm transition sm:w-40 sm:px-4 sm:py-3 ${
                       card.id === activeCard?.id
                         ? "border-[#f27c91] bg-[#fff6f7]"
                         : "border-slate-100 bg-white"
@@ -178,7 +178,7 @@ export default function HomeClient() {
             </div>
 
             {activeCard && (
-              <div className="rounded-2xl bg-white p-5 shadow-[var(--shadow-soft)]">
+              <div className="min-w-0 rounded-2xl bg-white p-4 shadow-[var(--shadow-soft)] sm:p-5">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div>
                     <h3 className="font-[var(--font-display)] text-lg text-[#2f1d1d]">
@@ -201,7 +201,7 @@ export default function HomeClient() {
                   rewardMap={rewardMap}
                   slotDoodles={activeCard.slotDoodles}
                 />
-                <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#f6a6b2] bg-[#fff6f7] px-4 py-3">
+                <div className="mt-5 flex flex-col gap-3 rounded-2xl border border-[#f6a6b2] bg-[#fff6f7] px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <p className="text-sm font-semibold text-[#2f1d1d]">
                       {t("verify.callout")}
@@ -227,7 +227,7 @@ export default function HomeClient() {
             )}
           </div>
 
-          <div className="space-y-6">
+          <div className="min-w-0 space-y-4 sm:space-y-6">
             <Settings
               card={creatingNew ? null : activeCard}
               onSaved={handleSaved}
