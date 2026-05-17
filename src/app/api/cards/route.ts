@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { serializeHabitCard, serializeHabitCards } from "@/lib/serialize-card";
 import { cardSchema } from "@/lib/validators";
 
 export async function GET() {
@@ -15,7 +16,7 @@ export async function GET() {
     orderBy: { createdAt: "desc" },
   });
 
-  return NextResponse.json(cards);
+  return NextResponse.json(await serializeHabitCards(cards));
 }
 
 export async function POST(request: Request) {
@@ -59,5 +60,5 @@ export async function POST(request: Request) {
     },
   });
 
-  return NextResponse.json(card, { status: 201 });
+  return NextResponse.json(await serializeHabitCard(card), { status: 201 });
 }

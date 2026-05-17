@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import confetti from "canvas-confetti";
 import { useSession } from "next-auth/react";
 import SignatureCanvas from "@/components/SignatureCanvas";
+import StampCardGrid from "@/components/StampCardGrid";
 import type { CheckinResult, HabitCard, RewardMap } from "@/types";
 
 const normalizeRewardMap = (rewardMap: RewardMap | null | undefined) => {
@@ -63,12 +64,14 @@ export default function VerifyPage() {
     void loadCard();
   }, [params.cardId, status, t]);
 
-  const handleCheckin = async () => {
+  const handleCheckin = async (doodleImage: string) => {
     if (!card) return;
     setError(null);
 
     const response = await fetch(`/api/cards/${card.id}/checkin`, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ doodleImage }),
     });
 
     if (!response.ok) {
@@ -94,6 +97,10 @@ export default function VerifyPage() {
         ? {
             ...prev,
             currentPoints: result.pointsAfter,
+            slotDoodles: {
+              ...prev.slotDoodles,
+              [result.pointsAfter]: result.slotDoodle,
+            },
           }
         : prev
     );
@@ -168,34 +175,12 @@ export default function VerifyPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-5 gap-3 sm:grid-cols-6">
-                {Array.from({ length: card.totalSlots }, (_, idx) => {
-                  const slot = idx + 1;
-                  const isFilled = slot <= card.currentPoints;
-                  const rewardText = rewardMap[slot];
-                  return (
-                    <div
-                      key={slot}
-                      className={`relative flex aspect-square items-center justify-center rounded-2xl border text-xs font-semibold ${
-                        rewardText
-                          ? "border-[#f6a6b2] bg-[#fff0f3] shadow-[0_0_12px_rgba(242,124,145,0.4)]"
-                          : "border-slate-100 bg-white"
-                      }`}
-                    >
-                      <span
-                        className={`h-6 w-6 rounded-full border-2 ${
-                          isFilled
-                            ? "border-[#f27c91] bg-[#f27c91]"
-                            : "border-slate-200"
-                        }`}
-                      />
-                      {rewardText && (
-                        <span className="absolute -top-2 right-1 text-lg">🎁</span>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+              <StampCardGrid
+                totalSlots={card.totalSlots}
+                currentPoints={card.currentPoints}
+                rewardMap={rewardMap}
+                slotDoodles={card.slotDoodles}
+              />
 
               <div className="rounded-2xl border border-[#f4d5da] bg-white/90 p-4">
                 <div className="mb-4">

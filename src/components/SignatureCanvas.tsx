@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { exportCompressedDoodle } from "@/lib/doodle-canvas";
 
 type SignatureCanvasProps = {
-  onComplete: () => Promise<void> | void;
+  onComplete: (doodleImage: string) => Promise<void> | void;
   resetKey: number;
   disabled?: boolean;
   disabledMessage?: string;
@@ -87,7 +88,17 @@ export default function SignatureCanvas({
         cancelAnimationFrame(frameRef.current);
         frameRef.current = null;
       }
-      void onComplete();
+
+      const canvas = canvasRef.current;
+      if (canvas) {
+        try {
+          const doodleImage = exportCompressedDoodle(canvas);
+          navigator.vibrate?.([100, 50, 100, 50, 400]);
+          void onComplete(doodleImage);
+        } catch {
+          resetAll();
+        }
+      }
       return;
     }
 

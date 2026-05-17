@@ -46,17 +46,20 @@ model HabitCard {
 }
 
 model CheckinEvent {
-  id          String    @id @default(uuid())
-  userId      String
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  cardId      String
-  card        HabitCard @relation(fields: [cardId], references: [id], onDelete: Cascade)
-  createdAt   DateTime  @default(now())
-  pointsAfter Int
-  isRewardHit Boolean
+  id            String    @id @default(uuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cardId        String
+  card          HabitCard @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  createdAt     DateTime  @default(now())
+  pointsAfter   Int
+  isRewardHit   Boolean
+  /// gzip-compressed doodle image bytes (see lib/doodle-storage.ts)
+  doodlePayload Bytes?
 
   @@index([userId])
   @@index([cardId])
+  @@index([cardId, createdAt])
 }
 
 model Account {

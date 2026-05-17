@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --experimental-strip-types --test src/lib/doodle-storage.test.ts src/lib/card-doodles.test.ts"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",

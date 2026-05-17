@@ -16,3 +16,11 @@ export const cardSchema = z.object({
   totalSlots: z.number().int().min(30),
   rewardMap: z.record(z.string(), z.string()).default({}),
 });
+
+export const checkinSchema = z.object({
+  doodleImage: z
+    .string()
+    .min(1)
+    .max(280_000)
+    .regex(/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$/),
+});

@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import Settings from "@/components/Settings";
+import StampCardGrid from "@/components/StampCardGrid";
 import type { HabitCard, RewardMap } from "@/types";
 
 const normalizeRewardMap = (rewardMap: RewardMap | null | undefined) => {
@@ -193,34 +194,13 @@ export default function HomeClient() {
                     {activeCard.totalSlots}
                   </div>
                 </div>
-                <div className="mt-4 grid grid-cols-5 gap-3 sm:grid-cols-6">
-                  {Array.from({ length: activeCard.totalSlots }, (_, idx) => {
-                    const slot = idx + 1;
-                    const isFilled = slot <= activeCard.currentPoints;
-                    const rewardText = rewardMap[slot];
-                    return (
-                      <div
-                        key={slot}
-                        className={`relative flex aspect-square items-center justify-center rounded-2xl border text-xs font-semibold ${
-                          rewardText
-                            ? "border-[#f6a6b2] bg-[#fff0f3] shadow-[0_0_12px_rgba(242,124,145,0.4)]"
-                            : "border-slate-100 bg-white"
-                        }`}
-                      >
-                        <span
-                          className={`h-6 w-6 rounded-full border-2 ${
-                            isFilled
-                              ? "border-[#f27c91] bg-[#f27c91]"
-                              : "border-slate-200"
-                          }`}
-                        />
-                        {rewardText && (
-                          <span className="absolute -top-2 right-1 text-lg">🎁</span>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
+                <StampCardGrid
+                  className="mt-4"
+                  totalSlots={activeCard.totalSlots}
+                  currentPoints={activeCard.currentPoints}
+                  rewardMap={rewardMap}
+                  slotDoodles={activeCard.slotDoodles}
+                />
                 <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#f6a6b2] bg-[#fff6f7] px-4 py-3">
                   <div>
                     <p className="text-sm font-semibold text-[#2f1d1d]">

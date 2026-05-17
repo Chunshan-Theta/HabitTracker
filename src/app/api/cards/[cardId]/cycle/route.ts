@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { serializeHabitCard } from "@/lib/serialize-card";
 
 export async function POST(
   _request: Request,
@@ -34,5 +35,5 @@ export async function POST(
     },
   });
 
-  return NextResponse.json(updated);
+  return NextResponse.json(await serializeHabitCard(updated));
 }

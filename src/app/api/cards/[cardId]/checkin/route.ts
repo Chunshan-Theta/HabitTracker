@@ -1,16 +1,32 @@
+import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { packDoodleForDb, unpackDoodleFromDb } from "@/lib/doodle-storage";
+import { checkinSchema } from "@/lib/validators";
 
 export async function POST(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ cardId: string }> }
 ) {
   const { cardId } = await params;
   const session = await getServerSession(authOptions);
   if (!session?.user?.email) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const body = await request.json();
+  const parsed = checkinSchema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json({ error: "Invalid doodle payload" }, { status: 400 });
+  }
+
+  let doodlePayload: Buffer;
+  try {
+    doodlePayload = packDoodleForDb(parsed.data.doodleImage);
+  } catch {
+    return NextResponse.json({ error: "Invalid doodle payload" }, { status: 400 });
   }
 
   const card = await prisma.habitCard.findFirst({
@@ -47,12 +63,16 @@ export async function POST(
       cardId: updated.id,
       pointsAfter: nextPoints,
       isRewardHit,
+      doodlePayload: doodlePayload as Prisma.Bytes,
     },
   });
+
+  const slotDoodle = unpackDoodleFromDb(doodlePayload);
 
   return NextResponse.json({
     pointsAfter: nextPoints,
     isRewardHit,
     rewardText: rewardText ?? null,
+    slotDoodle,
   });
 }
