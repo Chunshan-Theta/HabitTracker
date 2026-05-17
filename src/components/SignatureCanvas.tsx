@@ -296,7 +296,8 @@ export default function SignatureCanvas({
       </div>
       <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200">
         <div
-          className="h-full rounded-full bg-[#f27c91] transition-all"
+          id="progress-bar"
+          className="h-full rounded-full bg-[#f27c91] transition-[width] duration-75 ease-linear"
           style={{ width: `${progress * 100}%` }}
         />
       </div>

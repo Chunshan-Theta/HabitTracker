@@ -1,7 +1,5 @@
 import { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { packDoodleForDb, unpackDoodleFromDb } from "@/lib/doodle-storage";
 import { checkinSchema } from "@/lib/validators";
@@ -11,10 +9,6 @@ export async function POST(
   { params }: { params: Promise<{ cardId: string }> }
 ) {
   const { cardId } = await params;
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.email) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
 
   const body = await request.json();
   const parsed = checkinSchema.safeParse(body);
@@ -29,8 +23,8 @@ export async function POST(
     return NextResponse.json({ error: "Invalid doodle payload" }, { status: 400 });
   }
 
-  const card = await prisma.habitCard.findFirst({
-    where: { id: cardId, user: { email: session.user.email } },
+  const card = await prisma.habitCard.findUnique({
+    where: { id: cardId },
   });
 
   if (!card) {

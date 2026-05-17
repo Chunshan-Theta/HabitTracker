@@ -39,11 +39,6 @@ export default function VerifyPage() {
   }, [rewardModal]);
 
   useEffect(() => {
-    if (status !== "authenticated") {
-      setLoading(false);
-      return;
-    }
-
     const loadCard = async () => {
       setLoading(true);
       const response = await fetch(`/api/cards/${params.cardId}`, {
@@ -51,7 +46,11 @@ export default function VerifyPage() {
       });
 
       if (!response.ok) {
-        setError(response.status === 404 ? t("errors.selectCard") : t("errors.notSignedIn"));
+        setError(
+          response.status === 404
+            ? t("errors.selectCard")
+            : t("errors.generic")
+        );
         setLoading(false);
         return;
       }
@@ -62,7 +61,15 @@ export default function VerifyPage() {
     };
 
     void loadCard();
-  }, [params.cardId, status, t]);
+  }, [params.cardId, t]);
+
+  const handleBack = () => {
+    if (status !== "authenticated") {
+      router.push(`/${locale}`);
+    } else {
+      router.back();
+    }
+  };
 
   const handleCheckin = async (doodleImage: string) => {
     if (!card) return;
@@ -131,7 +138,7 @@ export default function VerifyPage() {
           <div className="flex items-center justify-between">
             <button
               type="button"
-              onClick={() => router.push(`/${locale}`)}
+              onClick={handleBack}
               className="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600"
             >
               {t("verify.back")}
@@ -191,8 +198,6 @@ export default function VerifyPage() {
                 </div>
                 <SignatureCanvas
                   resetKey={resetKey}
-                  disabled={status !== "authenticated"}
-                  disabledMessage={t("errors.notSignedIn")}
                   onComplete={handleCheckin}
                 />
               </div>

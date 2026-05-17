@@ -51,13 +51,8 @@ export async function GET(
   { params }: { params: Promise<{ cardId: string }> }
 ) {
   const { cardId } = await params;
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.email) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  const card = await prisma.habitCard.findFirst({
-    where: { id: cardId, user: { email: session.user.email } },
+  const card = await prisma.habitCard.findUnique({
+    where: { id: cardId },
   });
 
   if (!card) {
