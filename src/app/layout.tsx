@@ -39,6 +39,12 @@ export default async function RootLayout({
       lang={locale}
       className={`${fraunces.variable} ${manrope.variable} h-full antialiased`}
     >
+      <head>
+        <meta
+          name="google-site-verification"
+          content="o2nEMhtyuF6hxiBTo613Op_zADfD69S4h4yW01eXci4"
+        />
+      </head>
       <body className="min-h-full bg-[#FAF9F6] text-slate-900">
         {adsenseClient ? (
           <Script
