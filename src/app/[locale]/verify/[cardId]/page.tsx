@@ -8,6 +8,7 @@ import confetti from "canvas-confetti";
 import SignatureCanvas from "@/components/SignatureCanvas";
 import StampCardGrid from "@/components/StampCardGrid";
 import type { CheckinResult, HabitCard, RewardMap } from "@/types";
+import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 
 const normalizeRewardMap = (rewardMap: RewardMap | null | undefined) => {
   if (!rewardMap) return {} as RewardMap;
@@ -18,7 +19,7 @@ export default function VerifyPage() {
   const t = useTranslations();
   const locale = useLocale();
   const router = useRouter();
-  const params = useParams<{ cardId: string }>();
+  const params = useParams<{ locale?: string; cardId: string }>();
   const [card, setCard] = useState<HabitCard | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -26,6 +27,13 @@ export default function VerifyPage() {
   const [shareToast, setShareToast] = useState<string | null>(null);
   const [rewardModal, setRewardModal] = useState<string | null>(null);
   const [resetKey, setResetKey] = useState(0);
+
+  const safeLocale = useMemo(() => {
+    const candidate = params.locale ?? locale;
+    return locales.includes(candidate as Locale)
+      ? (candidate as Locale)
+      : defaultLocale;
+  }, [locale, params.locale]);
 
   useEffect(() => {
     if (rewardModal) {
@@ -63,7 +71,7 @@ export default function VerifyPage() {
   }, [params.cardId, t]);
 
   const handleBack = () => {
-    router.push(`/${locale}`);
+    window.location.href = `/${safeLocale}`;
   };
 
   const handleCheckin = async (doodleImage: string) => {
@@ -128,8 +136,8 @@ export default function VerifyPage() {
 
   const shareLink = useMemo(() => {
     if (typeof window === "undefined") return "";
-    return `${window.location.origin}/${locale}/verify/${params.cardId}`;
-  }, [locale, params.cardId]);
+    return `${window.location.origin}/${safeLocale}/verify/${params.cardId}`;
+  }, [params.cardId, safeLocale]);
 
   const shareRules = useMemo(
     () => t.raw("verify.shareRules") as string[],
