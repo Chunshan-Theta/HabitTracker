@@ -56,6 +56,8 @@ export default async function HomePage({
     redirect(`/${locale}/dashboard`);
   }
 
+  const nextLocale = activeLocale === "zh-TW" ? "en-US" : "zh-TW";
+
   const t = await getTranslations();
   const rawBenefits = t.raw("app.benefits");
   const benefits = Array.isArray(rawBenefits)
@@ -90,12 +92,12 @@ export default async function HomePage({
       <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col gap-4 sm:max-w-4xl sm:gap-6">
         <header className="flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-[var(--shadow-soft)] sm:p-5">
           <div className="flex items-center justify-end">
-            <Link
-              href={`/${locale === "zh-TW" ? "en-US" : "zh-TW"}`}
+            <a
+              href={`/${nextLocale}`}
               className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-600"
             >
-              {locale === "zh-TW" ? "EN" : "中文"}
-            </Link>
+              {activeLocale === "zh-TW" ? "EN" : "中文"}
+            </a>
           </div>
           <h1 className="font-[var(--font-display)] text-2xl text-[#2f1d1d]">
             {t("app.title")}
