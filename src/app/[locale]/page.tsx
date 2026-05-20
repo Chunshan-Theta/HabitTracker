@@ -52,6 +52,10 @@ export default async function HomePage({
   }
 
   const t = await getTranslations();
+  const rawBenefits = t.raw("app.benefits");
+  const benefits = Array.isArray(rawBenefits)
+    ? rawBenefits.filter((item: unknown): item is string => typeof item === "string")
+    : [];
 
   return (
     <main className="min-h-screen overflow-x-clip bg-[#FAF9F6] px-3 pb-16 pt-4 sm:px-4 sm:pt-6">
@@ -71,7 +75,7 @@ export default async function HomePage({
           <p className="text-sm text-slate-500">{t("app.description")}</p>
           <p className="text-sm text-slate-500">{t("app.subtitle")}</p>
           <div className="flex flex-col gap-2 text-xs text-slate-500">
-            {(t.raw("app.benefits") as string[]).map((item) => (
+            {benefits.map((item) => (
               <div key={item} className="flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-[#f27c91]" />
                 <span>{item}</span>
