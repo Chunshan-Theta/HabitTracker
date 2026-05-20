@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import Script from "next/script";
 import { getTranslations } from "next-intl/server";
 import { authOptions } from "@/lib/auth";
 
@@ -17,12 +18,13 @@ export async function generateMetadata({
   const activeLocale = locale === "zh-TW" || locale === "en-US" ? locale : "zh-TW";
   const baseTitle =
     activeLocale === "zh-TW"
-      ? "雙人互動習慣養成集點卡"
-      : "Shared Habit Stamp Card";
+      ? "Go30：把痛苦的堅持，變成有趣的闖關"
+      : "Go30: Turn painful persistence into a fun challenge";
   const description =
     activeLocale === "zh-TW"
-      ? "雙人同屏儀式感，讓每日打卡成為甜蜜的共同承諾。"
-      : "A ritualized two-person check-in that builds momentum together.";
+      ? "用 Go30 把痛苦的堅持變成像闖關一樣好玩：和夥伴一起打卡、設定專屬獎勵，30 天完成一個挑戰。"
+      : "Go30 turns tough persistence into a game: check in with a partner, set rewards, and finish a 30-day challenge together.";
+  const canonicalPath = `/${activeLocale}`;
 
   return {
     title: cardName ? `${cardName} · ${baseTitle}` : baseTitle,
@@ -30,6 +32,7 @@ export async function generateMetadata({
     openGraph: {
       title: cardName ? `${cardName} · ${baseTitle}` : baseTitle,
       description,
+      url: canonicalPath,
     },
     twitter: {
       card: "summary_large_image",
@@ -46,6 +49,8 @@ export default async function HomePage({
 }) {
   const session = await getServerSession(authOptions);
   const { locale } = await params;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://go30.zeabur.app";
+  const activeLocale = locale === "zh-TW" || locale === "en-US" ? locale : "zh-TW";
 
   if (session) {
     redirect(`/${locale}/dashboard`);
@@ -57,8 +62,31 @@ export default async function HomePage({
     ? rawBenefits.filter((item: unknown): item is string => typeof item === "string")
     : [];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name:
+      activeLocale === "zh-TW"
+        ? "Go30：把痛苦的堅持，變成有趣的闖關"
+        : "Go30: Turn painful persistence into a fun challenge",
+    description:
+      activeLocale === "zh-TW"
+        ? "用 Go30 把痛苦的堅持變成像闖關一樣好玩：和夥伴一起打卡、設定專屬獎勵，30 天完成一個挑戰。"
+        : "Go30 turns tough persistence into a game: check in with a partner, set rewards, and finish a 30-day challenge together.",
+    url: `${siteUrl}/${activeLocale}`,
+    inLanguage: activeLocale,
+    applicationCategory: "LifestyleApplication",
+    operatingSystem: "Web",
+    isAccessibleForFree: true,
+  };
+
   return (
     <main className="min-h-screen overflow-x-clip bg-[#FAF9F6] px-3 pb-16 pt-4 sm:px-4 sm:pt-6">
+      <Script
+        id="home-json-ld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col gap-4 sm:max-w-4xl sm:gap-6">
         <header className="flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-[var(--shadow-soft)] sm:p-5">
           <div className="flex items-center justify-end">

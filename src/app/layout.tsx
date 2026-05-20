@@ -16,8 +16,9 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Habit Tracker",
-  description: "A ritual-focused habit tracker for shared progress.",
+  title: "Go30: Turn painful persistence into a fun challenge",
+  description:
+    "Go30 turns tough persistence into a game: check in with a partner, set rewards, and finish a 30-day challenge together.",
 };
 
 export const viewport = {

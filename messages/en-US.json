@@ -1,14 +1,14 @@
 {
   "app": {
-    "title": "Shared Habit Stamp Card",
-    "description": "A ritualized two-person check-in that builds momentum together.",
-    "cta": "Start Check-in",
-    "subtitle": "A 30-day shared habit tracker for habit builders. Best used with an accountability partner for mutual encouragement and growth.",
+    "title": "Go30: Turn painful persistence into a fun challenge",
+    "description": "Go30 turns tough persistence into a game: check in with a partner, set rewards, and finish a 30-day challenge together.",
+    "cta": "Start your free 30-day challenge",
+    "subtitle": "Redefine habit building with a partner and rewards.",
     "benefits": [
-      "Build shared rituals and accountability",
-      "Celebrate progress with meaningful rewards",
-      "Strengthen your bond through teamwork"
-    ] 
+      "Set a completion reward so you want to check in every day",
+      "Invite a partner to carry each other",
+      "Keep it simple: focus on the next 30 days"
+    ]
   },
   "auth": {
     "signInTitle": "Sign In",

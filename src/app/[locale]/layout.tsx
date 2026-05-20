@@ -14,39 +14,43 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://go30.zeabur.app";
   const { locale } = await params;
   const activeLocale = locales.includes(locale as Locale)
     ? (locale as Locale)
     : "zh-TW";
+  const baseTitle =
+    activeLocale === "zh-TW"
+      ? "Go30：把痛苦的堅持，變成有趣的闖關"
+      : "Go30: Turn painful persistence into a fun challenge";
+  const description =
+    activeLocale === "zh-TW"
+      ? "用 Go30 把痛苦的堅持變成像闖關一樣好玩：和夥伴一起打卡、設定專屬獎勵，30 天完成一個挑戰。"
+      : "Go30 turns tough persistence into a game: check in with a partner, set rewards, and finish a 30-day challenge together.";
+  const canonicalPath = `/${activeLocale}`;
   return {
-    title:
-      activeLocale === "zh-TW"
-        ? "雙人互動習慣養成集點卡"
-        : "Shared Habit Stamp Card",
-    description:
-      activeLocale === "zh-TW"
-        ? "雙人同屏儀式感，讓每日打卡成為甜蜜的共同承諾。"
-        : "A ritualized two-person check-in that builds momentum together.",
+    metadataBase: new URL(siteUrl),
+    title: baseTitle,
+    description,
+    alternates: {
+      canonical: canonicalPath,
+      languages: {
+        "zh-TW": "/zh-TW",
+        "en-US": "/en-US",
+      },
+    },
     openGraph: {
-      title:
-        activeLocale === "zh-TW"
-          ? "雙人互動習慣養成集點卡"
-          : "Shared Habit Stamp Card",
-      description:
-        activeLocale === "zh-TW"
-          ? "雙人同屏儀式感，讓每日打卡成為甜蜜的共同承諾。"
-          : "A ritualized two-person check-in that builds momentum together.",
+      title: baseTitle,
+      description,
+      url: canonicalPath,
+      siteName: "Go30",
+      locale: activeLocale,
+      type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title:
-        activeLocale === "zh-TW"
-          ? "雙人互動習慣養成集點卡"
-          : "Shared Habit Stamp Card",
-      description:
-        activeLocale === "zh-TW"
-          ? "雙人同屏儀式感，讓每日打卡成為甜蜜的共同承諾。"
-          : "A ritualized two-person check-in that builds momentum together.",
+      title: baseTitle,
+      description,
     },
   };
 }
