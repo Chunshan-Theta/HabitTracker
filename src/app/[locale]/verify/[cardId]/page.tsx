@@ -5,7 +5,6 @@ import { useLocale, useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import confetti from "canvas-confetti";
-import { useSession } from "next-auth/react";
 import SignatureCanvas from "@/components/SignatureCanvas";
 import StampCardGrid from "@/components/StampCardGrid";
 import type { CheckinResult, HabitCard, RewardMap } from "@/types";
@@ -20,7 +19,6 @@ export default function VerifyPage() {
   const locale = useLocale();
   const router = useRouter();
   const params = useParams<{ cardId: string }>();
-  const { status } = useSession();
   const [card, setCard] = useState<HabitCard | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -65,11 +63,7 @@ export default function VerifyPage() {
   }, [params.cardId, t]);
 
   const handleBack = () => {
-    if (status !== "authenticated") {
-      router.push(`/${locale}`);
-    } else {
-      router.back();
-    }
+    router.push(`/${locale}`);
   };
 
   const handleCheckin = async (doodleImage: string) => {
