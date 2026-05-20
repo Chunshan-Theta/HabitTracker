@@ -161,6 +161,7 @@
     "shareHint": "把這一頁分享給夥伴，才能一起完成打卡。",
     "shareButton": "分享連結",
     "shareText": "打開此打卡連結，兩人一起培養興趣。",
+    "shareTextWithCard": "有人向您送出夥伴邀約，卡片名稱：{cardName}，獎勵數量：{rewardCount}。",
     "shareRulesTitle": "分享規則與方式",
     "shareRules": [
       "只分享給你的打卡夥伴。",

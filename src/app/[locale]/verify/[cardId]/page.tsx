@@ -144,6 +144,19 @@ export default function VerifyPage() {
     [t]
   );
 
+  const rewardCount = useMemo(
+    () => Object.keys(rewardMap).length,
+    [rewardMap]
+  );
+
+  const shareText = useMemo(() => {
+    if (!card) return t("verify.shareText");
+    return t("verify.shareTextWithCard", {
+      cardName: card.cardName,
+      rewardCount,
+    });
+  }, [card, rewardCount, t]);
+
   const handleShare = async () => {
     if (!shareLink) return;
 
@@ -151,7 +164,7 @@ export default function VerifyPage() {
       if (navigator.share) {
         await navigator.share({
           title: t("verify.shareTitle"),
-          text: t("verify.shareText"),
+          text: shareText,
           url: shareLink,
         });
         setShareToast(t("verify.shareSuccess"));

@@ -161,6 +161,7 @@
     "shareHint": "Send this page to your partner so you can check in together.",
     "shareButton": "Share link",
     "shareText": "Open this check-in link and complete the two-finger ritual together.",
+    "shareTextWithCard": "Join me on \"{cardName}\" - {rewardCount} rewards waiting. Open this check-in link and complete the two-finger ritual together.",
     "shareRulesTitle": "Sharing rules & how it works",
     "shareRules": [
       "Share the link only with your check-in partner.",
