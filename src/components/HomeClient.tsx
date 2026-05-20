@@ -87,7 +87,7 @@ export default function HomeClient() {
         <header className="flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-[var(--shadow-soft)] sm:p-5">
           <div className="flex items-center justify-end">
             <Link
-              href={`/${locale === "zh-TW" ? "en-US" : "zh-TW"}`}
+              href={`/${locale === "zh-TW" ? "en-US" : "zh-TW"}/dashboard`}
               className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-600"
             >
               {locale === "zh-TW" ? "EN" : "中文"}

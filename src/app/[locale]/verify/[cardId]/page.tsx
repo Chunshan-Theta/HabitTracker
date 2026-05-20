@@ -5,10 +5,10 @@ import { useLocale, useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import confetti from "canvas-confetti";
-import { useSession } from "next-auth/react";
 import SignatureCanvas from "@/components/SignatureCanvas";
 import StampCardGrid from "@/components/StampCardGrid";
 import type { CheckinResult, HabitCard, RewardMap } from "@/types";
+import { defaultLocale, locales, type Locale } from "@/i18n/routing";
 
 const normalizeRewardMap = (rewardMap: RewardMap | null | undefined) => {
   if (!rewardMap) return {} as RewardMap;
@@ -19,8 +19,7 @@ export default function VerifyPage() {
   const t = useTranslations();
   const locale = useLocale();
   const router = useRouter();
-  const params = useParams<{ cardId: string }>();
-  const { status } = useSession();
+  const params = useParams<{ locale?: string; cardId: string }>();
   const [card, setCard] = useState<HabitCard | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -28,6 +27,13 @@ export default function VerifyPage() {
   const [shareToast, setShareToast] = useState<string | null>(null);
   const [rewardModal, setRewardModal] = useState<string | null>(null);
   const [resetKey, setResetKey] = useState(0);
+
+  const safeLocale = useMemo(() => {
+    const candidate = params.locale ?? locale;
+    return locales.includes(candidate as Locale)
+      ? (candidate as Locale)
+      : defaultLocale;
+  }, [locale, params.locale]);
 
   useEffect(() => {
     if (rewardModal) {
@@ -65,11 +71,7 @@ export default function VerifyPage() {
   }, [params.cardId, t]);
 
   const handleBack = () => {
-    if (status !== "authenticated") {
-      router.push(`/${locale}`);
-    } else {
-      router.back();
-    }
+    window.location.href = `/${safeLocale}`;
   };
 
   const handleCheckin = async (doodleImage: string) => {
@@ -134,13 +136,26 @@ export default function VerifyPage() {
 
   const shareLink = useMemo(() => {
     if (typeof window === "undefined") return "";
-    return `${window.location.origin}/${locale}/verify/${params.cardId}`;
-  }, [locale, params.cardId]);
+    return `${window.location.origin}/${safeLocale}/verify/${params.cardId}`;
+  }, [params.cardId, safeLocale]);
 
   const shareRules = useMemo(
     () => t.raw("verify.shareRules") as string[],
     [t]
   );
+
+  const rewardCount = useMemo(
+    () => Object.keys(rewardMap).length,
+    [rewardMap]
+  );
+
+  const shareText = useMemo(() => {
+    if (!card) return t("verify.shareText");
+    return t("verify.shareTextWithCard", {
+      cardName: card.cardName,
+      rewardCount,
+    });
+  }, [card, rewardCount, t]);
 
   const handleShare = async () => {
     if (!shareLink) return;
@@ -149,7 +164,7 @@ export default function VerifyPage() {
       if (navigator.share) {
         await navigator.share({
           title: t("verify.shareTitle"),
-          text: t("verify.shareText"),
+          text: shareText,
           url: shareLink,
         });
         setShareToast(t("verify.shareSuccess"));
