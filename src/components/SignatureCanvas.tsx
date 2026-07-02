@@ -15,7 +15,6 @@ type Point = { x: number; y: number };
 
 const BLUE = "#AEC6CF";
 const ORANGE = "#FFB347";
-const SYNC_DURATION_MS = 3000;
 
 export default function SignatureCanvas({
   onComplete,
@@ -26,9 +25,6 @@ export default function SignatureCanvas({
   const t = useTranslations("canvas");
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const frameRef = useRef<number | null>(null);
-  const startTimeRef = useRef<number | null>(null);
-  const [progress, setProgress] = useState(0);
   const [locked, setLocked] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [fullscreenStage, setFullscreenStage] = useState<"preview" | "active">(
@@ -36,6 +32,7 @@ export default function SignatureCanvas({
   );
   const [hasStartedConfirm, setHasStartedConfirm] = useState(false);
   const lastPointsRef = useRef<Map<number, Point>>(new Map());
+  const hasDrawnRef = useRef(false);
 
   const clearCanvas = () => {
     const canvas = canvasRef.current;
@@ -63,14 +60,9 @@ export default function SignatureCanvas({
   };
 
   const resetAll = () => {
-    setProgress(0);
     setLocked(false);
-    startTimeRef.current = null;
+    hasDrawnRef.current = false;
     lastPointsRef.current.clear();
-    if (frameRef.current) {
-      cancelAnimationFrame(frameRef.current);
-      frameRef.current = null;
-    }
     clearCanvas();
   };
 
@@ -111,52 +103,38 @@ export default function SignatureCanvas({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isFullscreen]);
 
-  const updateProgress = () => {
-    if (!startTimeRef.current) return;
+  const closeFullscreen = async () => {
+    setFullscreenStage("preview");
+    setIsFullscreen(false);
+    if (!document.fullscreenElement) return;
 
-    const elapsed = performance.now() - startTimeRef.current;
-    const nextProgress = Math.min(elapsed / SYNC_DURATION_MS, 1);
-    setProgress(nextProgress);
+    try {
+      await document.exitFullscreen();
+    } catch {
+      // Fall back to the in-app fullscreen layout below.
+    }
+  };
 
-    if (nextProgress >= 1) {
-      setLocked(true);
-      startTimeRef.current = null;
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current);
-        frameRef.current = null;
-      }
+  const completeDoodle = async () => {
+    if (locked || !hasDrawnRef.current) return;
 
-      const canvas = canvasRef.current;
-      if (canvas) {
-        try {
-          const doodleImage = exportCompressedDoodle(canvas);
-          navigator.vibrate?.([100, 50, 100, 50, 400]);
-          void onComplete(doodleImage);
-          setFullscreenStage("preview");
-          setIsFullscreen(false);
-          if (document.fullscreenElement) {
-            void document.exitFullscreen();
-          }
-        } catch {
-          resetAll();
-          setFullscreenStage("preview");
-          setIsFullscreen(false);
-          if (document.fullscreenElement) {
-            void document.exitFullscreen();
-          }
-        }
-      }
-
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      resetAll();
+      await closeFullscreen();
       return;
     }
 
-    frameRef.current = requestAnimationFrame(updateProgress);
-  };
+    setLocked(true);
 
-  const ensureProgress = () => {
-    if (!startTimeRef.current) {
-      startTimeRef.current = performance.now();
-      frameRef.current = requestAnimationFrame(updateProgress);
+    try {
+      const doodleImage = exportCompressedDoodle(canvas);
+      navigator.vibrate?.([100, 50, 100, 50, 400]);
+      await onComplete(doodleImage);
+      await closeFullscreen();
+    } catch {
+      resetAll();
+      await closeFullscreen();
     }
   };
 
@@ -213,21 +191,11 @@ export default function SignatureCanvas({
     setIsFullscreen(true);
   };
 
-  const handleTouchStart = (event: React.TouchEvent<HTMLCanvasElement>) => {
-    if (!canvasIsInteractive) return;
-    if (event.touches.length < 2) return;
-    ensureProgress();
-  };
-
   const handleTouchMove = (event: React.TouchEvent<HTMLCanvasElement>) => {
     if (!canvasIsInteractive) return;
-    if (event.touches.length < 2) {
-      resetAll();
-      return;
-    }
+    if (event.touches.length < 2) return;
 
     event.preventDefault();
-    ensureProgress();
     navigator.vibrate?.(10);
 
     const canvas = canvasRef.current;
@@ -252,6 +220,7 @@ export default function SignatureCanvas({
       }
       ctx.lineTo(x, y);
       ctx.stroke();
+      hasDrawnRef.current = true;
       lastPointsRef.current.set(touch.identifier, { x, y });
     });
   };
@@ -259,7 +228,12 @@ export default function SignatureCanvas({
   const handleTouchEnd = (event: React.TouchEvent<HTMLCanvasElement>) => {
     if (!canvasIsInteractive) return;
     if (event.touches.length < 2) {
-      resetAll();
+      if (!hasDrawnRef.current) {
+        resetAll();
+        return;
+      }
+
+      void completeDoodle();
     }
   };
 
@@ -278,10 +252,7 @@ export default function SignatureCanvas({
   return (
     <div ref={containerRef} className={fullscreenClassName}>
       <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-slate-600">
-        <div className="flex items-center gap-2">
-          <span className="font-medium">{t("progress")}</span>
-          <span className="tabular-nums">{Math.round(progress * 100)}%</span>
-        </div>
+        <p className="font-medium">{t("hint")}</p>
         <div className="flex flex-wrap items-center gap-2">
           {isFullscreenActive && (
             <button
@@ -294,18 +265,10 @@ export default function SignatureCanvas({
           )}
         </div>
       </div>
-      <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200">
-        <div
-          id="progress-bar"
-          className="h-full w-full origin-left rounded-full bg-[#f27c91] transition-transform duration-75 ease-linear"
-          style={{ transform: `scaleX(${progress})` }}
-        />
-      </div>
       <div className={canvasShellClassName}>
         <canvas
           ref={canvasRef}
           className={canvasClassName}
-          onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
           onTouchCancel={handleTouchEnd}

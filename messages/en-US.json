@@ -178,14 +178,14 @@
   },
   "canvas": {
     "title": "Two-finger verification",
-    "hint": "Use two fingers and keep drawing for 3 seconds",
+    "hint": "Use two fingers and draw together to check in",
     "progress": "Sync progress",
     "complete": "Verified",
     "fullscreen": "Full screen",
     "exitFullscreen": "Exit",
     "confirmFullscreen": "Start confirm",
     "cancelConfirm": "Cancel confirm",
-    "fullscreenHint": "After clicking start confirm, both of you will draw a pattern in the corners of the screen within three seconds to represent the result. It can be a cute flower for a perfect score or a cool personal signature. The key is to complete it together at the same time to successfully earn a stamp!",
+    "fullscreenHint": "After clicking start confirm, both of you will draw a pattern in the corners of the screen together to represent the result. It can be a cute flower for a perfect score or a cool personal signature. The key is to complete it at the same time to successfully earn a stamp!",
     "startConfirm": "Start confirm"
   },
   "toast": {
