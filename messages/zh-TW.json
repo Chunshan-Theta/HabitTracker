@@ -203,7 +203,7 @@
   },
   "errors": {
     "invalidCredentials": "帳號或密碼錯誤",
-    "cardExpired": "目前無法完成打卡，請稍後再試。",
+    "cardExpired": "此卡片已過期，請重新建立或重啟卡片。",
     "checkInFailed": "目前無法完成打卡，請稍後再試。",
     "notSignedIn": "請先登入",
     "selectCard": "請先登入並選擇卡片",

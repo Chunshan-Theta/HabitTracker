@@ -203,7 +203,7 @@
   },
   "errors": {
     "invalidCredentials": "Invalid email or password",
-    "cardExpired": "Unable to check in right now.",
+    "cardExpired": "This card has expired. Please restart or create a new card.",
     "checkInFailed": "Unable to check in right now.",
     "notSignedIn": "Please sign in",
     "selectCard": "Sign in and select a card",
