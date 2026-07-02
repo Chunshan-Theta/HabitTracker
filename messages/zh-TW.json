@@ -204,6 +204,7 @@
   "errors": {
     "invalidCredentials": "帳號或密碼錯誤",
     "cardExpired": "目前無法完成打卡，請稍後再試。",
+    "checkInFailed": "目前無法完成打卡，請稍後再試。",
     "notSignedIn": "請先登入",
     "selectCard": "請先登入並選擇卡片",
     "cardComplete": "卡片已完成"

@@ -91,7 +91,7 @@ export default function VerifyPage() {
           ? t("errors.cardComplete")
           : result.error === "Unauthorized"
             ? t("errors.notSignedIn")
-            : t("errors.cardExpired");
+            : t("errors.checkInFailed");
       setError(errorMessage);
       setResetKey((prev) => prev + 1);
       return;
