@@ -23,7 +23,7 @@ export async function POST(
   }
 
   const now = new Date();
-  const cycleEndAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+  const cycleEndAt = new Date("9999-12-31T23:59:59.999Z");
 
   const updated = await prisma.habitCard.update({
     where: { id: card.id },

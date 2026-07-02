@@ -1,8 +1,8 @@
 {
   "app": {
     "title": "Go30: Turn painful persistence into a fun challenge",
-    "description": "Go30 turns tough persistence into a game: check in with a partner, set rewards, and finish a 30-day challenge together.",
-    "cta": "Start your free 30-day challenge",
+    "description": "Go30 turns tough persistence into a game: check in with a partner, set rewards, and build progress stamp by stamp.",
+    "cta": "Start your free stamp challenge",
     "subtitle": "Redefine habit building with a partner and rewards.",
     "benefits": [
       "Set a completion reward so you want to check in every day",
@@ -27,7 +27,7 @@
   "settings": {
     "title": "Create New Card",
     "editTitle": "Edit Card",
-    "helper": "Shape a 30-day ritual together.",
+    "helper": "Shape your stamp ritual together.",
     "cardName": "Card name",
     "placeholderName": "Morning ritual",
     "totalSlots": "Total slots",
@@ -40,9 +40,9 @@
     "save": "Save",
     "saving": "Saving",
     "reset": "Reset card",
-    "newCycle": "Restart 30-day cycle",
+    "newCycle": "Restart stamp progress",
     "saveError": "Please check the card name, total slots (up to 30), and reward settings.",
-    "cycleError": "Unable to restart cycle",
+    "cycleError": "Unable to restart stamp progress",
     "resetError": "Unable to reset card",
     "defaultRewards": [
       "Mini getaway",
@@ -178,14 +178,14 @@
   },
   "canvas": {
     "title": "Two-finger verification",
-    "hint": "Use two fingers and keep drawing for 3 seconds",
+    "hint": "Use two fingers and draw together to check in",
     "progress": "Sync progress",
     "complete": "Verified",
     "fullscreen": "Full screen",
     "exitFullscreen": "Exit",
     "confirmFullscreen": "Start confirm",
     "cancelConfirm": "Cancel confirm",
-    "fullscreenHint": "After clicking start confirm, both of you will draw a pattern in the corners of the screen within three seconds to represent the result. It can be a cute flower for a perfect score or a cool personal signature. The key is to complete it together at the same time to successfully earn a stamp!",
+    "fullscreenHint": "After clicking start confirm, both of you will draw a pattern in the corners of the screen together to represent the result. It can be a cute flower for a perfect score or a cool personal signature. The key is to complete it at the same time to successfully earn a stamp!",
     "startConfirm": "Start confirm"
   },
   "toast": {
@@ -203,7 +203,8 @@
   },
   "errors": {
     "invalidCredentials": "Invalid email or password",
-    "cardExpired": "Unable to check in right now.",
+    "cardExpired": "This card has expired. Please restart or create a new card.",
+    "checkInFailed": "Unable to check in right now.",
     "notSignedIn": "Please sign in",
     "selectCard": "Sign in and select a card",
     "cardComplete": "Card is already complete"

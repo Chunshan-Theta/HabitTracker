@@ -22,8 +22,8 @@ export async function generateMetadata({
       : "Go30: Turn painful persistence into a fun challenge";
   const description =
     activeLocale === "zh-TW"
-      ? "用 Go30 把痛苦的堅持變成像闖關一樣好玩：和夥伴一起打卡、設定專屬獎勵，30 天完成一個挑戰。"
-      : "Go30 turns tough persistence into a game: check in with a partner, set rewards, and finish a 30-day challenge together.";
+      ? "用 Go30 把痛苦的堅持變成像闖關一樣好玩：和夥伴一起打卡、設定專屬獎勵，慢慢累積每一格成就。"
+      : "Go30 turns tough persistence into a game: check in with a partner, set rewards, and build progress stamp by stamp.";
   const canonicalPath = `/${activeLocale}`;
 
   return {
@@ -73,8 +73,8 @@ export default async function HomePage({
         : "Go30: Turn painful persistence into a fun challenge",
     description:
       activeLocale === "zh-TW"
-        ? "用 Go30 把痛苦的堅持變成像闖關一樣好玩：和夥伴一起打卡、設定專屬獎勵，30 天完成一個挑戰。"
-        : "Go30 turns tough persistence into a game: check in with a partner, set rewards, and finish a 30-day challenge together.",
+        ? "用 Go30 把痛苦的堅持變成像闖關一樣好玩：和夥伴一起打卡、設定專屬獎勵，慢慢累積每一格成就。"
+        : "Go30 turns tough persistence into a game: check in with a partner, set rewards, and build progress stamp by stamp.",
     url: `${siteUrl}/${activeLocale}`,
     inLanguage: activeLocale,
     applicationCategory: "LifestyleApplication",

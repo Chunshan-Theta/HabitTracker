@@ -1,13 +1,13 @@
 {
   "app": {
     "title": "Go30：把痛苦的堅持，變成有趣的闖關",
-    "description": "用 Go30 把痛苦的堅持變成像闖關一樣好玩：和夥伴一起打卡、設定專屬獎勵，30 天完成一個挑戰。",
-    "cta": "免費開始 30 天挑戰",
+    "description": "用 Go30 把痛苦的堅持變成像闖關一樣好玩：和夥伴一起打卡、設定專屬獎勵，慢慢累積每一格成就。",
+    "cta": "免費開始集點挑戰",
     "subtitle": "帶著夥伴與獎勵，重新定義習慣養成。",
     "benefits": [
       "先設完成獎勵，讓你每天都想打卡",
       "邀請夥伴一起 Carry，也一起被 Carry",
-      "極簡 30 天，只專注眼前這一關"
+      "極簡集點，只專注眼前這一關"
     ]
   },
   "auth": {
@@ -27,7 +27,7 @@
   "settings": {
     "title": "建立新卡",
     "editTitle": "編輯卡片",
-    "helper": "自訂每 30 天的集點儀式。",
+    "helper": "自訂你的集點儀式。",
     "cardName": "卡片名稱",
     "placeholderName": "一起早起挑戰",
     "totalSlots": "總格數",
@@ -40,9 +40,9 @@
     "save": "儲存",
     "saving": "儲存中",
     "reset": "重置卡片",
-    "newCycle": "重新開啟新 30 天",
+    "newCycle": "重新開始集點",
     "saveError": "請確認卡片名稱、總格數（最多 30 格）與獎勵設定。",
-    "cycleError": "無法重啟週期",
+    "cycleError": "無法重新開始集點",
     "resetError": "無法重置卡片",
     "defaultRewards": [
       "小旅行",
@@ -178,14 +178,14 @@
   },
   "canvas": {
     "title": "雙指同步驗證",
-    "hint": "雙指同時長按塗鴉 3 秒即可打卡",
+    "hint": "雙指同時塗鴉即可打卡",
     "progress": "同步進度",
     "complete": "驗證完成",
     "fullscreen": "全螢幕",
     "exitFullscreen": "退出",
     "confirmFullscreen": "開始確認",
     "cancelConfirm": "取消確認",
-    "fullscreenHint": "點擊開始確認後，請雙方在螢幕兩角用三秒鐘的時間繪製一個圖案來代表這次的結果。可以是一朵可愛的滿分小花，也可以是帥氣的個人簽名，重點是要兩個人同時完成，才能成功獲得集點喔！",
+    "fullscreenHint": "點擊開始確認後，請雙方在螢幕兩角一起繪製一個圖案來代表這次的結果。可以是一朵可愛的滿分小花，也可以是帥氣的個人簽名，重點是要兩個人同時完成，才能成功獲得集點喔！",
     "startConfirm": "開始確認"
   },
   "toast": {
@@ -203,7 +203,8 @@
   },
   "errors": {
     "invalidCredentials": "帳號或密碼錯誤",
-    "cardExpired": "目前無法完成打卡，請稍後再試。",
+    "cardExpired": "此卡片已過期，請重新建立或重啟卡片。",
+    "checkInFailed": "目前無法完成打卡，請稍後再試。",
     "notSignedIn": "請先登入",
     "selectCard": "請先登入並選擇卡片",
     "cardComplete": "卡片已完成"

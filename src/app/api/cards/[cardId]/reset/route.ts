@@ -26,10 +26,16 @@ export async function POST(
     where: { cardId: card.id },
   });
 
+  const now = new Date();
+  const cycleEndAt = new Date("9999-12-31T23:59:59.999Z");
+
   const updated = await prisma.habitCard.update({
     where: { id: card.id },
     data: {
       currentPoints: 0,
+      cycleStartAt: now,
+      cycleEndAt,
+      status: "active",
       rewardMap: {},
     },
   });
