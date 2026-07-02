@@ -31,10 +31,6 @@ export async function POST(
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  if (card.cycleEndAt.getTime() < Date.now()) {
-    return NextResponse.json({ error: "Cycle expired" }, { status: 409 });
-  }
-
   if (card.currentPoints >= card.totalSlots) {
     return NextResponse.json({ error: "Card complete" }, { status: 409 });
   }

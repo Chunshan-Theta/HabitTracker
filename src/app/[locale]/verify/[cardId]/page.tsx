@@ -87,13 +87,11 @@ export default function VerifyPage() {
     if (!response.ok) {
       const result = await response.json();
       const errorMessage =
-        result.error === "Cycle expired"
-          ? t("errors.cardExpired")
-          : result.error === "Card complete"
-            ? t("errors.cardComplete")
-            : result.error === "Unauthorized"
-              ? t("errors.notSignedIn")
-              : result.error ?? t("errors.cardExpired");
+        result.error === "Card complete"
+          ? t("errors.cardComplete")
+          : result.error === "Unauthorized"
+            ? t("errors.notSignedIn")
+            : t("errors.cardExpired");
       setError(errorMessage);
       setResetKey((prev) => prev + 1);
       return;

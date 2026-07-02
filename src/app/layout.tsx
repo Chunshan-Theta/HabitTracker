@@ -18,7 +18,7 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   title: "Go30: Turn painful persistence into a fun challenge",
   description:
-    "Go30 turns tough persistence into a game: check in with a partner, set rewards, and finish a 30-day challenge together.",
+    "Go30 turns tough persistence into a game: check in with a partner, set rewards, and build progress stamp by stamp.",
 };
 
 export const viewport = {
